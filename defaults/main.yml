@@ -1,0 +1,10 @@
+---
+victoriametrics_docker_network_name: prom_network
+
+victoriametrics_container_name: victoriametrics
+victoriametrics_docker_image: "victoriametrics/victoria-metrics:v1.58.0"
+victoriametrics_docker_labels:
+  - prometheus
+  - victoriametrics
+victoriametrics_storage_dir: /var/lib/victoriametrics/data
+

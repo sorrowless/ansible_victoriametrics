@@ -1,0 +1,30 @@
+---
+- name: Ensure data directory
+  file:
+    state: directory
+    path: "{{ victoriametrics_storage_dir }}"
+    mode: 0755
+  with_items:
+    - templates
+
+- name: Start docker prometheus container
+  docker_service:
+    state: present
+    project_name: victoriametrics
+    definition:
+      version: '2'
+      services:
+        victoriametrics:
+          image: "{{ victoriametrics_docker_image }}"
+          container_name: "{{ victoriametrics_container_name }}"
+          ports:
+            - "127.0.0.1:8428:8428"
+          volumes:
+            - "{{ victoriametrics_storage_dir }}/:/victoria-metrics-data"
+          hostname: "{{ victoriametrics_container_name }}"
+          restart: always
+          labels: "{{ victoriametrics_docker_labels }}"
+      networks:
+        default:
+          external:
+            name: "{{ victoriametrics_docker_network_name }}"
