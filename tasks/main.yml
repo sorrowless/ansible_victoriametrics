@@ -8,7 +8,7 @@
     - templates
 
 - name: Start docker prometheus container
-  docker_service:
+  community.docker.docker_compose:
     state: present
     project_name: victoriametrics
     definition:
