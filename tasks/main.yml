@@ -8,11 +8,10 @@
     - templates
 
 - name: Start docker prometheus container
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     state: present
     project_name: victoriametrics
     definition:
-      version: '2'
       services:
         victoriametrics:
           image: "{{ victoriametrics_docker_image }}"
@@ -26,5 +25,5 @@
           labels: "{{ victoriametrics_docker_labels }}"
       networks:
         default:
-          external:
-            name: "{{ victoriametrics_docker_network_name }}"
+          external: true
+          name: "{{ victoriametrics_docker_network_name }}"
